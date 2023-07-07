@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
+from whitenoise import WhiteNoise
+import whitenoise
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -36,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    # white noise app
+    'whitenoise.runserver_nostatic',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'amitapp',
@@ -46,6 +51,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    # whitenoise start
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # whitenoise end
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -124,6 +133,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,"static")]
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# whitenoise managed
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# For production Deployments
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 
 #email settings
 EMAIL_HOST = "smtp.gmail.com"

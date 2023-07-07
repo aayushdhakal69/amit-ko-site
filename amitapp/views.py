@@ -11,12 +11,14 @@ def index(request):
     if request.method == "POST":
         name = request.POST["name"]
         email = request.POST["email"]
+        phone = request.POST["phone"]
         content = request.POST["content"]
         
         data = Contact()
         data.name = name
         
         data.email = email
+        data.phone = phone
         data.content = content
     
         
